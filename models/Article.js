@@ -11,9 +11,18 @@ const articleSchema = mongoose.Schema({
     favoritesCount: { type: Number, default: 0 }
 }, { timestamps: true })
 
+articleSchema.pre("save", function (next) {
+    if (this.isNew || this.modifiedPaths().includes("slug")) {
+        this.slug = this.title
+        this.slug = this.slug.replace(/\s/g, "-").toLowerCase()
+    }
+    next()
+})
+
 const Article = mongoose.model("Article", articleSchema)
 
 const createArticle = async (articleData) => {
+    console.log(articleData)
     return await Article.create(articleData)
 }
 
