@@ -29,18 +29,20 @@ const createNewArticle = async (req, res) => {
 }
 
 const getArticles = async (req, res) => {
-    const queryKey = Object.keys(req.query)[0]
-    const queryValue = Object.values(req.query)[0]
     let articles = []
-    if (queryKey === "author") {
-        const user = await getUserByUsername(queryValue)
-        articles = await getSelectedArticles({ author: user._id })
-    } else if (queryKey === "tag") {
-        articles = await getSelectedArticles({ tagList: { $in: queryValue } })
-    } else if (!queryKey) {
-        articles = await getAllArticles({})
+    if (Object.keys(req.query).length) {
+        const queryKey = Object.keys(req.query)[0]
+        const queryValue = Object.values(req.query)[0]
+        if (queryKey === "author") {
+            const user = await getUserByUsername(queryValue)
+            if (user) {
+                articles = await getSelectedArticles({ author: user._id })
+            }
+        } else if (queryKey === "tag") {
+            articles = await getSelectedArticles({ tagList: { $in: queryValue } })
+        }
     } else {
-        res.sendStatus(404)
+        articles = await getAllArticles({})
     }
 
     const articlesCount = articles.length
