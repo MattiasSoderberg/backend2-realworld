@@ -6,7 +6,7 @@ const {
     validateUsernameAndEmail,
 } = require("../middlewares/validation");
 const { login } = require("../models/User")
-const { authUser, generateToken } = require("../controllers/auth")
+const { generateToken } = require("../controllers/auth")
 
 router.post("/", checkEmptyFields, validateUsernameAndEmail, createNewUser);
 
@@ -23,5 +23,6 @@ router.post("/login", async (req, res) => {
         res.sendStatus(401);
     }
 })
+
 
 module.exports = router;

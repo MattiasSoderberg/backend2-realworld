@@ -1,6 +1,7 @@
 const { createUser } = require("../models/User")
 
 
+
 const createNewUser = async (req, res) => {
         const user = await createUser(req.body.user)
         if (user) {
@@ -9,6 +10,7 @@ const createNewUser = async (req, res) => {
             res.status(400).json({ message: "Couldn't create user" })
         }
 }
+
 
 
 
