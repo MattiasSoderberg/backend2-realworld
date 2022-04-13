@@ -24,12 +24,5 @@ router.post("/login", async (req, res) => {
     }
 })
 
-// router.put("/settings", updateUser, async (req, res) => {
-//     const { email, username, image, bio } = req.body.user
-//     const { password } = req.body.user
-  
-//     console.log(email, username, password, image, bio)
-//     console.log(user)
-//   })
 
 module.exports = router;
