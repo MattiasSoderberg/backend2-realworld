@@ -12,7 +12,7 @@ const tagsRouter = require("./routes/tags")
 const profileRouter = require("./routes/profiles")
 
 const app = express()
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 
 mongoose.connect(process.env.MONGO_URI)
