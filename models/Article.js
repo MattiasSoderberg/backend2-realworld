@@ -22,7 +22,7 @@ const getSelectedArticles = async (query) => {
 }
 
 const getAllArticles = async () => {
-    return await Article.find().populate("author", ("username"))
+    return await Article.find().populate("author", "username")
 }
 
 module.exports = { createArticle, getAllArticles, getSelectedArticles }
