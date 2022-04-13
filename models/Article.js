@@ -34,4 +34,8 @@ const getAllArticles = async () => {
     return await Article.find().populate("author", "username")
 }
 
-module.exports = { createArticle, getAllArticles, getSelectedArticles }
+const getArticleBySlug = async (slug) => {
+    return await Article.findOne({slug})
+}
+
+module.exports = { createArticle, getAllArticles, getSelectedArticles, getArticleBySlug }

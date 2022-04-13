@@ -1,4 +1,4 @@
-const { createArticle, getAllArticles, getSelectedArticles } = require("../models/Article")
+const { createArticle, getAllArticles, getSelectedArticles, getArticleBySlug } = require("../models/Article")
 const { getUserByUsername } = require("../models/User")
 const { createTags } = require("../models/Tag")
 
@@ -54,4 +54,34 @@ const getArticles = async (req, res) => {
     }
 }
 
-module.exports = { createNewArticle, getArticles }
+const getSingleArticleBySlug = async (req, res) => {
+    const { slug } = req.params
+    const article = await getArticleBySlug(slug)
+    if (article) {
+        res.json({ article })
+    } else {
+        res.sendStatus(404)
+    }
+}
+
+const updateSingleArticle = async (req, res) => {
+    const { slug } = req.params
+    const article = await getArticleBySlug(slug)
+    if ( article ) {
+        // article.title = req.body.article.title
+        // article.description = req.body.article.description
+        article.body = req.body.article.body
+        // article.tagList = req.body.article.tagList
+        await article.save()
+        res.json({article})
+    } else {
+        res.sendStatus(400)
+    }
+}
+
+module.exports = { 
+    createNewArticle, 
+    getArticles,
+    getSingleArticleBySlug,
+    updateSingleArticle
+}
