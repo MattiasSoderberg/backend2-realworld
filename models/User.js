@@ -50,7 +50,7 @@ const login = async (email, password) => {
 //         }
 //         res.redirect("/api/")
 //       })
-// }
+// } ///
 
 
 module.exports = { createUser, getUserByUsername, login }
