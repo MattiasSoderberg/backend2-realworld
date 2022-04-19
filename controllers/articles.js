@@ -40,6 +40,11 @@ const getArticles = async (req, res) => {
             }
         } else if (queryKey === "tag") {
             articles = await getSelectedArticles({ tagList: { $in: queryValue } })
+        } else if (queryKey === "favorited") {
+            const user = await getUserByUsername(queryValue)
+            if (user) {
+                articles = await getSelectedArticles({ _id: { $in: user.favorited } })
+            }
         }
     } else {
         articles = await getAllArticles({})
@@ -73,15 +78,55 @@ const updateSingleArticle = async (req, res) => {
         article.body = req.body.article.body
         // article.tagList = req.body.article.tagList
         await article.save()
-        res.json({article})
+        res.json({ article })
     } else {
         res.sendStatus(400)
     }
 }
 
+const favorieArticle = async (req, res) => {
+    const user = await getUserByUsername(req.user.username)
+    if (user) {
+        const article = await getArticleBySlug(req.params.slug)
+        if (article) {
+            user.favorited.addToSet(article._id)
+            article.favoritesCount += 1
+            article.favorited = true
+            await user.save()
+            await article.save()
+            res.json({ article })
+        } else {
+            res.sendStatus(404)
+        }
+    } else {
+        res.sendStatus(404)
+    }
+}
+
+const unFavoriteArticle = async (req, res) => {
+    const user = await getUserByUsername(req.user.username)
+    if (user) {
+        const article = await getArticleBySlug(req.params.slug)
+        if (article) {
+            user.favorited.pop(article._id)
+            article.favoritesCount -= 1
+            article.favorited = false
+            await user.save()
+            await article.save()
+            res.json({ article })
+        } else {
+            res.sendStatus(404)
+        }
+    } else {
+        res.sendStatus(404)
+    }
+}
+
 module.exports = { 
-    createNewArticle, 
+    createNewArticle,
     getArticles,
     getSingleArticleBySlug,
-    updateSingleArticle
+    updateSingleArticle,
+    favorieArticle,
+    unFavoriteArticle
 }

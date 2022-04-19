@@ -22,7 +22,6 @@ articleSchema.pre("save", function (next) {
 const Article = mongoose.model("Article", articleSchema)
 
 const createArticle = async (articleData) => {
-    console.log(articleData)
     return await Article.create(articleData)
 }
 
@@ -35,7 +34,12 @@ const getAllArticles = async () => {
 }
 
 const getArticleBySlug = async (slug) => {
-    return await Article.findOne({slug})
+    return await Article.findOne({ slug })
 }
 
-module.exports = { createArticle, getAllArticles, getSelectedArticles, getArticleBySlug }
+module.exports = {
+    createArticle,
+    getAllArticles,
+    getSelectedArticles,
+    getArticleBySlug
+}

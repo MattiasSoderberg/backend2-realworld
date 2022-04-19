@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     bio: { type: String, default: "" },
     image: { type: String, default: "" },
-    token: { type: String, default: "" }
+    token: { type: String, default: "" },
+    favorited: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }]
 })
 
 userSchema.pre("save", async function (next) {
@@ -38,17 +39,5 @@ const login = async (email, password) => {
     }
     return null;
 };
-
-// const updateUser = async (email, username, password, image, bio) => {
-//     const user = req.user.userId
-//     const filter = { _id: `${user}` }
-//     User.findByIdAndUpdate(filter, {$set: {email: email, username: username, password: password, image: image, bio:bio}}, {new: true}, (err, doc) => {
-//         if (err) {
-//           console.log("Something wrong when updating data!")
-//         }
-//         res.redirect("/api/")
-//       })
-// } ///
-
 
 module.exports = { createUser, getUserByUsername, login }
