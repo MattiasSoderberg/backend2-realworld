@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     bio: { type: String, default: "" },
     image: { type: String, default: "" },
-    token: { type: String, default: "" }
+    token: { type: String, default: "" },
+    favorited: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }]
 })
 
 userSchema.pre("save", async function (next) {
