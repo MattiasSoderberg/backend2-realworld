@@ -22,7 +22,6 @@ articleSchema.pre("save", function (next) {
 const Article = mongoose.model("Article", articleSchema)
 
 const createArticle = async (articleData) => {
-    console.log(articleData)
     return await Article.create(articleData)
 }
 
