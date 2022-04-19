@@ -11,7 +11,7 @@ const getAllTags = async () => {
 }
 
 const createTags = async (tags) => {
-    return await Tag.insertMany(tags)
+    return await Tag.insertMany(tags, { ordered: false })
 }
 
 module.exports = { getAllTags, createTags }
