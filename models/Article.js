@@ -34,7 +34,12 @@ const getAllArticles = async () => {
 }
 
 const getArticleBySlug = async (slug) => {
-    return await Article.findOne({slug})
+    return await Article.findOne({ slug })
 }
 
-module.exports = { createArticle, getAllArticles, getSelectedArticles, getArticleBySlug }
+module.exports = {
+    createArticle,
+    getAllArticles,
+    getSelectedArticles,
+    getArticleBySlug
+}
