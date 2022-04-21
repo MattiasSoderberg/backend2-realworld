@@ -40,4 +40,8 @@ const login = async (email, password) => {
     return null;
 };
 
-module.exports = { createUser, getUserByUsername, login }
+const findAndUpdateUser = async (username, userData) => {
+    return await User.findOneAndUpdate({ username }, userData)
+}
+
+module.exports = { createUser, getUserByUsername, login, findAndUpdateUser }
